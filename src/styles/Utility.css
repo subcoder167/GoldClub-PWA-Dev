@@ -1,0 +1,44 @@
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+
+.cursiveFont{
+    font-family: 'Amarante', cursive;
+}
+.homeslider .swiper-pagination-bullet
+{
+    background: gainsboro;
+}
+
+.bestseller
+{
+    background: #E5B02A;
+}
+.trending
+{
+    background: #1A4CCC;
+}
+
+.testimoinalslider .sliderswiper-button-prev:after,.swiper-button-prev:after,
+.swiper-rtl .swiper-button-next:after
+{
+content: '◀' !important;
+color: #111;
+font-size: 15px !important;
+}
+.swiper-button-next:after,
+.swiper-rtl .swiper-button-prev:after
+{
+    content: '▶' !important;
+        color: #111;
+        font-size: 15px !important;
+}

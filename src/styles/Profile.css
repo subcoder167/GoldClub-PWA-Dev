@@ -1,0 +1,90 @@
+.profileWrapper {
+  display: flex;
+  flex-direction: column;
+  /* height: 100vh; */
+  width: 100%;
+}
+
+.profileTopWrapper {
+  padding: 2% 0;
+}
+.profileDiv .profileImageWrapper {
+  background: grey;
+  padding: 5px;
+  width: 100px;
+  height: 100px;
+  position: relative;
+  overflow: visible;
+}
+.profileDiv .profileImageWrapper img {
+  border-radius: 50%;
+  object-fit: cover;
+}
+.profileDiv .profileImageWrapper input {
+  appearance: none;
+  display: none;
+}
+#profileImageUploadBtn {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  z-index: 100;
+  font-size: 20px;
+  background: #007bff;
+
+  padding: 1% 8%;
+  border-radius: 50%;
+}
+
+.profileDiv .profileName {
+  font-size: 4vh;
+}
+.profileEditBtn {
+  padding: 12px 40px;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.profileFormWrapper .inputGroup {
+  width: 80%;
+  margin: 15px 0;
+}
+
+.profileFormWrapper .inputGroup .label {
+  min-width: 150px;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: #838282;
+}
+.profileFormWrapper .inputGroup {
+  flex: 1;
+}
+
+@media screen and (max-width: 600px) {
+  .profileTopWrapper {
+    padding: 10px 2vw;
+  }
+  .profileDiv .profileImageWrapper {
+    width: 60px;
+    height: 60px;
+  }
+  .profileDiv .profileName {
+    font-size: 3vh;
+  }
+  .profileDiv .profileRole {
+    font-size: 10px;
+  }
+  .profileEditBtn {
+    padding: 8px 25px;
+  }
+  .profileEditBtn span {
+    font-size: 13px;
+  }
+  .profileFormWrapper {
+    margin: 10px auto;
+    width: 95%;
+  }
+  .profileFormWrapper .inputGroup {
+    width: 100%;
+  }
+}
