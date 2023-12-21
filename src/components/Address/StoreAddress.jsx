@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { IoLocationOutline } from "react-icons/io5";
 import { MdLocationSearching } from "react-icons/md";
 import { Link } from "react-router-dom";
@@ -32,10 +32,20 @@ const AddressDiv = ({ address }) => {
   );
 };
 const StoreAddress = () => {
-  const [addresses, setAddresses] = useState(
-    JSON.parse(localStorage.getItem(`vjw-${window.location.hostname}address`))
-  );
-  // const uniqueIdsSet = new Set();
+  const [addresses, setAddresses] = useState([]);
+
+  useEffect(() => {
+    const fetchAndUpdateAddresses = () => {
+      // Fetch or update data here
+      // For example, you can fetch data from an API or update it in some way
+      const fetchedAddresses = localStorage.getItem(`vjw-${window.location.hostname}address`);
+
+      // Update the addresses state using setAddresses
+      setAddresses(JSON.parse(fetchedAddresses));
+    };
+
+    fetchAndUpdateAddresses();
+  }, []); // The empty dependency array ensures that this effect runs only once, similar to componentDidMount
   return (
     <section className='flex flex-col items-start justify-start mt-4 w-full'>
       <h4 className='font-bold text-2xl px-[35px]'>Store Locations</h4>

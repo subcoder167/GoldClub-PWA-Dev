@@ -181,7 +181,7 @@ const PriceBreakDown = (props) => {
     parseFloat(totalMakingCharge) +
     parseFloat(totalGemstonePrice);
 
-  let totalGST =
+  let totalGST = 
     (subtotal *
       parseFloat(
         pd?.attributes?.filter((attr) => attr?.attribute?.name == "GST")[0]
@@ -189,7 +189,7 @@ const PriceBreakDown = (props) => {
       )) /
     100;
 
-  let finalPrice = parseFloat(subtotal) + parseFloat(totalGST);
+  let finalPrice = Math.ceil(parseFloat(subtotal) + parseFloat(totalGST));
 
   // setBreakDown(CartData)
   useEffect(() => {
@@ -221,7 +221,7 @@ const PriceBreakDown = (props) => {
         <SectionTitle title='Price Breakdown' />
 
         <section className='w-full flex flex-col shadow-md mt-4'>
-          <div className='flex items-center justify-between border-b-2 py-3 px-4'>
+          <div className='flex items-center justify-between py-3 px-4'>
             <span className='font-bold'>
               {metalType.toUpperCase()}&nbsp;{metalPurity}k
             </span>
@@ -230,49 +230,49 @@ const PriceBreakDown = (props) => {
             </span>
           </div>
 
-          <div className='flex items-center justify-between border-b-2 py-3 px-4'>
+          <div className='flex items-center justify-between py-3 px-4'>
             <span className='font-bold'>Net Weight</span>
             <span className='font-bold'>{netWeight} {'gm'}</span>
           </div>
-          <div className='flex items-center justify-between border-b-2 py-3 px-4'>
+          <div className='flex items-center justify-between py-3 px-4'>
             <span className='font-bold'>Total Metal Charge</span>
             <span className='font-bold'>
-              <DisplayPrice price={totalMetalCharge.toFixed(2)} />
+              <DisplayPrice price={Math.ceil(totalMetalCharge)} />
             </span>
           </div>
-          <div className='flex items-center justify-between border-b-2 py-3 px-4'>
+          <div className='flex items-center justify-between py-3 px-4'>
             <span className='font-bold'>Total Making Charge</span>
             <span className='font-bold'>
-              <DisplayPrice price={totalMakingCharge.toFixed(2)} />
+              <DisplayPrice price={Math.ceil(totalMakingCharge)} />
             </span>
           </div>
-          <div className='flex items-center justify-between border-b-2 py-3 px-4'>
+          <div className='flex items-center justify-between py-3 px-4'>
             <span className='font-bold'>Total Wastage Charge</span>
             <span className='font-bold'>
-              <DisplayPrice price={totalWastageCharge.toFixed(2)} />
+              <DisplayPrice price={Math.ceil(totalWastageCharge)} />
             </span>
           </div>
-          <div className='flex items-center justify-between border-b-2 py-3 px-4'>
+          <div className='flex items-center justify-between py-3 px-4'>
             <span className='font-bold'>Gemstone Price</span>
             <span className='font-bold break-all'>
-              <DisplayPrice price={totalGemstonePrice.toFixed(2)} />
+              <DisplayPrice price={Math.ceil(totalGemstonePrice)} />
             </span>
           </div>
-          <div className='flex items-center justify-between border-b-2 py-3 px-4'>
+          <div className='flex items-center justify-between py-3 px-4'>
             <span className='font-bold'>SubTotal</span>
             <span className='font-bold'>
-              <DisplayPrice price={subtotal.toFixed(2)} />
+              <DisplayPrice price={Math.ceil(subtotal)} />
             </span>
           </div>
-          <div className='flex items-center justify-between border-b-2 py-3 px-4'>
+          <div className='flex items-center justify-between py-3 px-4'>
             <span className='font-bold'>GST (3%)</span>
             <span className='font-bold'>
-              <DisplayPrice price={totalGST.toFixed(2)} />
+              <DisplayPrice price={Math.ceil(totalGST)} />
             </span>
           </div>
-          <div className='flex items-center justify-between border-b-2 py-3 px-4'>
+          <div className='flex items-center background-green justify-between rounded-md border-4 border-green-400 py-3 px-4'>
             <span className='font-bold'>Total Price</span>
-            <span className='font-bold' id='finalPrice' data-price={finalPrice}>
+            <span className='font-bold text-2xl' id='finalPrice' data-price={finalPrice}>
               <DisplayPrice price={finalPrice.toFixed(2)} />
             </span>
           </div>
@@ -284,6 +284,7 @@ const PriceBreakDown = (props) => {
 const ProductDetails = (props) => {
   const [isDesignBank, setIsDesignBank] = useState(false);
   const search = useSelector((state) => state?.client?.homeSearchOpen);
+  const [availability, setAvailability] = useState("Ready");
   const [favorite, setFavorite] = useState(false);
   const [currentProduct, setCurrentProduct] = useState(null);
   const [breakDown, setBreakDown] = useState(null);
@@ -307,6 +308,7 @@ const ProductDetails = (props) => {
       console.log("ProductDetails: getProductDetails(306)",data);
       setCurrentProduct(data?.product?.variants[0] || data?.product);
       setIsDesignBank(data?.product?.attributes[25]?.values[0]?.name);
+      setAvailability(data?.product?.attributes[1]?.values[0]?.isAvailable);
       console.log(data?.product?.attributes[25]?.values[0]?.name);
       console.log(isDesignBank)
     },
@@ -487,7 +489,7 @@ const ProductDetails = (props) => {
                   >
                     Add to cart
                   </div>
-                  {(isDesignBank === "false") && (
+                  {((isDesignBank === "false") || (availability === "READY")) && (
                   <div
                     className='w-1/2 h-10 font-bold bg-[#000531] pb-1 text-white border-[#000531] flex items-center justify-center  border  ml-2 rounded-md'
                     onClick={() => {
@@ -540,6 +542,24 @@ const ProductDetails = (props) => {
                   getBreakDown={(e) => setBreakDown(e)}
                 />
                 )}
+              </section>
+              <section className="w-100 flex flex-row gap-9 px-4 py-8">
+                <div>
+                  <img className="h-10 w-auto" src={process.env.PUBLIC_URL + "/gia.png"} alt="GIA CERTIFIED" />
+                  {/* <p>GIA CERTIFIED</p> */}
+                </div>
+                <div>
+                  <img className="h-10 w-auto" src={process.env.PUBLIC_URL + "/hallmark.png"} alt="HALLMARKED" />
+                  {/* <p>HALLMARKED</p> */}
+                </div>
+                <div>
+                  <img className="h-10 w-auto" src={process.env.PUBLIC_URL + "/igi.png"} alt="IGI CERTIFIED" />
+                  {/* <p>IGI CERTIFIED</p> */}
+                </div>
+                <div>
+                  <img className="h-10 w-auto" src={process.env.PUBLIC_URL + "/sgl.png"} alt="SGL STANDARD" />
+                  {/* <p>SGL STANDARD</p> */}
+                </div>
               </section>
             </section>
           </section>

@@ -305,11 +305,11 @@ const Home = () => {
       <Essentials />
       {/* <section className='w-full px-[10px] my-8 lg:px-[100px]'>
       </section> */}
-      <section className='productCardWrapper w-full px-3 justify-start gap-4 flex items-stretch  flex-wrap md:w-[95%] md:px-[2.5%]  md:gap-4  '>
+      <section className='productCardWrapper w-full px-3 justify-start gap-4 flex items-stretch  flex-wrap md:w-[95%] md:px-[2.5%]  md:gap-4 py-6 '>
         {allProducts?.loading && <Loader />}
         {!allProducts?.loading && localList?.length == 0 && (
           <h2 className='text-md text-red-600 font-bold '>
-            No Products found!
+            Login to view design bank products!
           </h2>
         )}
         {!allProducts?.loading &&

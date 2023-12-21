@@ -56,14 +56,16 @@ const ProductCard = ({ product }) => {
             to={"/app/products/" + product?.node?.id}
             className='productImage flex items-center justify-center '
           >
-            <img
-              src={
-                product?.node?.thumbnail?.url ||
-                localStorage.getItem(`vjw-${window.location.hostname}logo`) ||
-                process.env.PUBLIC_URL + "/logo_nav.png"
-              }
-              alt={product?.node?.name}
-            />
+            {/* {product?.node?.thumbnail?.url &&  */}
+              <img
+                src={
+                  product?.node?.thumbnail?.url 
+                  ||  process.env.PUBLIC_URL + "/no-image.jpg"
+                }
+                alt={product?.node?.name}
+              />
+            {/* } */}
+            
             
           </Link>
           <Link

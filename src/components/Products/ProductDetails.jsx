@@ -30,7 +30,7 @@ function ProductDetailCard(props) {
 }
 
 const ProductDetails = (props) => {
-  const [seeMore, setSeeMore] = useState(false);
+  const [seeMore, setSeeMore] = useState(true);
   const [counter, setCounter] = useState(props?.quantity);
 
   useEffect(() => {
@@ -38,6 +38,15 @@ const ProductDetails = (props) => {
   }, [counter]);
   const incrementQuantity = () => props?.increment();
   const decrementQuantity = () => props?.decrement();
+  const specificAttributes = [
+    'Less Weight',
+    'Gross Weight',
+    'Net Weight',
+    'Making Charge',
+    'Wastage Charge',
+    'Gemstone Details',
+    'Total Gemstone Weight',
+  ];
   
   return (
     <div className='productDetails flex flex-col items-start justify-start w-[95%] my-4'>
@@ -51,17 +60,18 @@ const ProductDetails = (props) => {
 
         <div className='w-full flex justify-start flex-wrap relative'>
         {props?.product?.attributes
-          ?.filter(attribute => attribute?.values[0]?.name && attribute?.values[0]?.name.toLowerCase() !== 'none')
+          ?.filter(attribute => (
+            specificAttributes.includes(attribute?.attribute?.name) &&
+            attribute?.values[0]?.name &&
+            attribute?.values[0]?.name.toLowerCase() !== 'none'
+          ))
           .map((attribute) => (
             <ProductDetailCard
-              key={attribute?.attribute?.name} // Add a unique key
+              key={attribute?.attribute?.name} // Ensure this is unique
               title={attribute?.attribute?.name}
               description={attribute?.values[0]?.name}
             />
         ))}
-
-
-  
 
         </div>
       </div>

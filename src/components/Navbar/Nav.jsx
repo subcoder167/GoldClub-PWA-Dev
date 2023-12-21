@@ -63,7 +63,7 @@ const Nav = () => {
       if (data?.storeDetails) {
         localStorage.setItem(
           `vjw-${window.location.hostname}logo`,
-          data?.storeDetails?.storeLogo || process.env.PUBLIC_URL + "/logo.png"
+          data?.storeDetails?.storeLogo
         );
         localStorage.setItem(
           `vjw-${window.location.hostname}name`,
