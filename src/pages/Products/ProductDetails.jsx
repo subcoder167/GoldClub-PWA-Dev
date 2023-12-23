@@ -57,6 +57,8 @@ const PriceBreakDown = (props) => {
   let vd = props?.currentProduct;
   let pd = props?.product?.data?.product;
 
+  console.log(pd);
+
   // METAL PRICES
   let metalType = pd?.attributes
     .filter((attr) => attr?.attribute?.name == "Metal Type")[0]
@@ -85,6 +87,9 @@ const PriceBreakDown = (props) => {
     default:
       break;
   }
+
+  // console.log(metalPurity);
+
   let metalPrice = gettotalMetalCharge(metalType, metalPurity) || 0;
 
   let netWeight =
@@ -469,6 +474,7 @@ const ProductDetails = (props) => {
                   }
                 />
               </section>
+              
               <section className='w-[95%] lg:w-3/5 flex flex-col items-center justify-center lg:justify-start lg:items-start lg:px-10'>
                 <ProductDetail
                   product={currentProduct}
@@ -478,32 +484,17 @@ const ProductDetails = (props) => {
                   increment={increment}
                   decrement={decrement}
                   quantity={quantity}
+                  attributes={product?.data?.product?.attributes}
                 />
-                <div className='w-full flex items-center justify-between my-4'>
-                  <div
-                    className='w-1/2 h-10 font-bold flex items-center justify-center border-black border  ml-2 rounded-md pb-1'
-                    ref={addToCartBtn}
-                    onClick={() => {
-                      createItem(currentProduct);
-                    }}
-                  >
-                    Add to cart
-                  </div>
-                  {((isDesignBank === "false") || (availability === "READY")) && (
-                  <div
-                    className='w-1/2 h-10 font-bold bg-[#000531] pb-1 text-white border-[#000531] flex items-center justify-center  border  ml-2 rounded-md'
-                    onClick={() => {
-                      createItem(currentProduct);
-                      navigate("/app/cart");
-                    }}
-                  >
-                    Buy Now
-                  </div>
-                  )}
-                </div>
+                
+
+
+
+
+
                 {(isDesignBank === "false") && (
                 <section className='w-full flex flex-col flex-wrap items-start px-4 '>
-                  <SectionTitle title='Select Variant' />
+                  <SectionTitle title='Select Your Size' />
                   <select
                     className='selectCustomization flex items-center justify-between shadow-lg rounded-md border-2 bg-white w-3/4 h-10 p-2 '
                     onChange={(e) =>
@@ -535,6 +526,51 @@ const ProductDetails = (props) => {
                   </div> */}
                 </section>
                 )}
+                <section className="w-100 flex flex-row gap-9 px-4 py-8">
+                <div className="text-center">
+                  <img className="h-10 w-auto mx-auto" src={process.env.PUBLIC_URL + "/fast.svg"} alt="tTIMELY DELIVERY" />
+                  <p>TIMELY DELIVERY</p>
+                </div>
+                <div className="text-center">
+                  <img className="h-10 w-auto mx-auto" src={process.env.PUBLIC_URL + "/hallmark.png"} alt="HALLMARKED" />
+                  <p>HALLMARKED</p>
+                </div>
+                <div className="text-center">
+                  <img className="h-10 w-auto mx-auto" src={process.env.PUBLIC_URL + "/shipping.svg"} alt="FREE SHIPPING" />
+                  <p>FREE SHIPPING</p>
+                </div>
+              </section>
+                
+
+                
+              
+
+
+
+
+                <div className='w-full flex items-center justify-between my-4'>
+                  <div
+                    className='w-1/2 h-10 font-bold flex items-center justify-center border-black border  ml-2 rounded-md pb-1'
+                    ref={addToCartBtn}
+                    onClick={() => {
+                      createItem(currentProduct);
+                    }}
+                  >
+                    Add to cart
+                  </div>
+                  {((isDesignBank === "false") || (availability === "READY")) && (
+                  <div
+                    className='w-1/2 h-10 font-bold bg-[#000531] pb-1 text-white border-[#000531] flex items-center justify-center  border  ml-2 rounded-md'
+                    onClick={() => {
+                      createItem(currentProduct);
+                      navigate("/app/cart");
+                    }}
+                  >
+                    Buy Now
+                  </div>
+                  )}
+                  
+                </div>
                 {(isDesignBank === "false") && (
                 <PriceBreakDown
                   currentProduct={currentProduct}
@@ -542,16 +578,16 @@ const ProductDetails = (props) => {
                   getBreakDown={(e) => setBreakDown(e)}
                 />
                 )}
+                
               </section>
               <section className="w-100 flex flex-row gap-9 px-4 py-8">
                 <div>
                   <img className="h-10 w-auto" src={process.env.PUBLIC_URL + "/gia.png"} alt="GIA CERTIFIED" />
                   {/* <p>GIA CERTIFIED</p> */}
                 </div>
-                <div>
+                {/* <div>
                   <img className="h-10 w-auto" src={process.env.PUBLIC_URL + "/hallmark.png"} alt="HALLMARKED" />
-                  {/* <p>HALLMARKED</p> */}
-                </div>
+                </div> */}
                 <div>
                   <img className="h-10 w-auto" src={process.env.PUBLIC_URL + "/igi.png"} alt="IGI CERTIFIED" />
                   {/* <p>IGI CERTIFIED</p> */}

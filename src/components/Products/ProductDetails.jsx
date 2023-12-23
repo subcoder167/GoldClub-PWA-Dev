@@ -29,15 +29,120 @@ function ProductDetailCard(props) {
   );
 }
 
+
+
+
+
+
+
+
+// const ProdInfo = (props) => {
+  
+//   let vd = props?.currentProduct;
+//   let pd = props?.product?.data?.product;
+
+//   // METAL PRICES
+//   let metalType = pd?.attributes
+//     .filter((attr) => attr?.attribute?.name == "Metal Type")[0]
+//     ?.values[0]?.name?.toLowerCase();
+//   let metalPurity = 0;
+
+//   switch (metalType) {
+//     case "gold":
+//       metalPurity = pd?.attributes
+//         .filter((attr) => attr?.attribute?.name == "Gold Carat")[0]
+//         ?.values[0]?.name?.toLowerCase();
+//       break;
+//     case "silver":
+//       metalPurity = pd?.attributes
+//         .filter((attr) => attr?.attribute?.name == "Silver Carat")[0]
+//         ?.values[0]?.name?.toLowerCase();
+//       break;
+
+//     case "platinum":
+//       metalPurity = pd?.attributes
+//         .filter((attr) => attr?.attribute?.name == "Platinum Carat")[0]
+//         ?.values[0]?.name?.toLowerCase();
+//       break;
+
+//     default:
+//       break;
+//   }
+
+//   console.log(metalPurity);
+
+//   // GEMSTONES
+//   // const isStudded =
+//   //   pd?.attributes?.filter((attr) => attr?.attribute?.name == "Type")[0]
+//   //     ?.values[0]?.name == "Studded" || false;
+//   // let gemstoneDetails;
+
+//   // let totalGemstonewt = 0;
+//   // let totalGemstonePrice = 0;
+//   // if (isStudded) {
+//   //   gemstoneDetails = JSON.parse(
+//   //     vd?.attributes?.filter(
+//   //       (attr) => attr?.attribute?.slug == "gemstone-details"
+//   //     )[0]?.values[0]?.value
+//   //   );
+
+//   return (
+//     <>
+//       <div>{metalType}:{metalPurity}</div>
+//     </>
+//   );
+// };
+
+
+
+
+
+
+
+
+
 const ProductDetails = (props) => {
+
+  // const stringifiedProp = JSON.stringify(props, null, 2)
+
+  // console.log(stringifiedProp);
+
   const [seeMore, setSeeMore] = useState(true);
   const [counter, setCounter] = useState(props?.quantity);
 
   useEffect(() => {
     if (counter < 1) setCounter(1);
   }, [counter]);
+
+
   const incrementQuantity = () => props?.increment();
   const decrementQuantity = () => props?.decrement();
+
+
+  const gold = JSON.parse(JSON.stringify(props?.attributes.find(attr => attr.attribute.name === "Metal Type").values))[0].name;
+  const purity = JSON.parse(JSON.stringify((props?.attributes.find(attr=>attr.attribute.name === "Gold Carat").values)))[0].name;
+  
+  const gem = JSON.parse(JSON.stringify((props?.attributes.find(attr=>attr.attribute.name === "Gemstone").values)))[0].name;
+  const gems = gem.replace(/[\[\]"\']/g, '');
+
+  const gemAllDetails = props?.attributes.find(attr => attr.attribute.id === "QXR0cmlidXRlOjg5")?.values;
+  let gemDetails = [];
+
+  if (gemAllDetails && gemAllDetails.length > 0) {
+    const jsonString = gemAllDetails[0].name;
+
+    try {
+      // Parse the "name" value into an array
+      gemDetails = JSON.parse(jsonString);
+    } catch (error) {
+      console.error("Error parsing JSON:", error);
+    }
+  }
+
+  // console.log(gemDetails[0]);
+
+
+
   const specificAttributes = [
     'Less Weight',
     'Gross Weight',
@@ -47,11 +152,28 @@ const ProductDetails = (props) => {
     'Gemstone Details',
     'Total Gemstone Weight',
   ];
+
+
+  
+
   
   return (
     <div className='productDetails flex flex-col items-start justify-start w-[95%] my-4'>
       <h1 className='text-3xl font-bold'>{props?.name}</h1>
       <SectionTitle title='Product Details' />
+
+    {/* {JSON.stringify(props?.attributes.find(attr=>attr.attribute.name=="Metal Type").values)}
+    {JSON.stringify(props?.attributes.find(attr=>attr.attribute.name=="Gold Carat").values)} */}
+
+    
+      <span className={seeMore ? 'block' : 'hidden'}>
+        Set in {gold} {purity}k, with {gemDetails[0]?.shape},({gemDetails[0]?.size}) {gems}.  
+      </span>
+
+      
+
+
+
       <div
         // className={seeMore ? "line-clamp-none w-full " : "line-clamp-1 w-full"}
         className={seeMore ? "h-0 overflow-hidden w-full " : "h-auto w-full"}
@@ -75,12 +197,24 @@ const ProductDetails = (props) => {
 
         </div>
       </div>
+
+
+
+      <div>
+        
+      </div>
+
+
       <div
         className='seeMore text-indigo-600 text-md mt-2 underline'
         onClick={() => setSeeMore(!seeMore)}
       >
         {seeMore ? "See All" : "See Less"}
       </div>
+
+
+
+
       <div className='priceDivWrapper flex items-center justify-between w-full my-4 '>
         <div className='priceDiv flex items-center'>
           <div className='price text-2xl font-black'>

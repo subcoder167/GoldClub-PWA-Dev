@@ -82,7 +82,7 @@ const link = split(
   }),
   new HttpLink({
     uri:
-      // (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') ? 'https://sinjewllers.goldclub.co/graphql/' : 
+      (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') ? 'https://sjjewellery.goldclub.co/graphql/' : 
       window.location.origin + '/graphql/'
   })
 );
